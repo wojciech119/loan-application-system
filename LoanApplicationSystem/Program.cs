@@ -33,10 +33,10 @@ builder.Services
 builder.Services.AddControllersWithViews(options =>
 {
     options.ModelBindingMessageProvider.SetValueMustBeANumberAccessor(
-        fieldName => $"Pole {fieldName} musi byÊ liczbπ.");
+        fieldName => $"Pole {fieldName} musi by√¶ liczb¬π.");
 
     options.ModelBindingMessageProvider.SetAttemptedValueIsInvalidAccessor(
-        (value, fieldName) => $"WartoúÊ '{value}' nie jest poprawna dla pola {fieldName}.");
+        (value, fieldName) => $"Warto≈ì√¶ '{value}' nie jest poprawna dla pola {fieldName}.");
 });
 
 builder.Services.AddScoped<CreditScoringService>();
