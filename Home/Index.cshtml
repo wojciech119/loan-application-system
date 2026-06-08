@@ -1,0 +1,42 @@
+﻿@{
+    ViewData["Title"] = "Start";
+}
+
+<div class="home-wrapper">
+    <div class="home-title">
+        <h1>Obsługa wniosków kredytowych</h1>
+
+        <p>
+            System wspierający pracę banku przy ocenie zdolności kredytowej klientów.
+        </p>
+    </div>
+
+    <div class="home-action-list">
+        <a asp-controller="LoanApplications"
+           asp-action="Create"
+           class="home-action-panel">
+            Nowy wniosek
+        </a>
+
+        <a asp-controller="LoanApplications"
+           asp-action="Index"
+           class="home-action-panel">
+            Wnioski
+        </a>
+
+        @if (User.IsInRole("Administrator"))
+        {
+            <a asp-controller="Admin"
+               asp-action="Index"
+               class="home-action-panel supervisor-panel">
+                Panel przełożonego
+            </a>
+
+            <a asp-controller="Cms"
+               asp-action="Index"
+               class="home-action-panel announcement-panel">
+                Ogłoszenia
+            </a>
+        }
+    </div>
+</div>
