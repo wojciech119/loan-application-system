@@ -1,0 +1,62 @@
+﻿@model IEnumerable<LoanApplicationSystem.Models.CmsPage>
+
+@{
+    ViewData["Title"] = "Ogłoszenia";
+}
+
+<div class="page-header mb-4">
+    <h1>Ogłoszenia dla pracowników</h1>
+
+    <p class="lead text-muted mb-0">
+        Panel pozwala przełożonemu aktualizować krótkie informacje widoczne w systemie.
+    </p>
+</div>
+
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success">
+        @TempData["SuccessMessage"]
+    </div>
+}
+
+<div class="row g-4">
+    @foreach (var cmsPage in Model)
+    {
+        <div class="col-lg-6">
+            <div class="card shadow-sm h-100">
+                <div class="card-body p-4">
+                    <span class="badge bg-primary mb-3">
+                        @if (cmsPage.Key == "home")
+                        {
+                            <text>Strona startowa</text>
+                        }
+                        else if (cmsPage.Key == "about")
+                        {
+                            <text>Informacja systemowa</text>
+                        }
+                        else
+                        {
+                            @cmsPage.Key
+                        }
+                    </span>
+
+                    <h4>@cmsPage.Title</h4>
+
+                    <p class="text-muted">
+                        @cmsPage.Content
+                    </p>
+
+                    <p class="small text-muted">
+                        Aktualizacja: @cmsPage.UpdatedAt.ToString("dd.MM.yyyy HH:mm")
+                    </p>
+
+                    <a asp-action="Edit"
+                       asp-route-id="@cmsPage.Id"
+                       class="btn btn-outline-primary">
+                        Edytuj
+                    </a>
+                </div>
+            </div>
+        </div>
+    }
+</div>

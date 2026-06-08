@@ -1,0 +1,25 @@
+﻿@{
+    Layout = "/Views/Shared/_Layout.cshtml";
+}
+
+<div class="classic-page mb-4">
+    <h1>Zarządzanie kontem</h1>
+
+    <p>
+        W tym miejscu możesz sprawdzić i zmienić ustawienia swojego konta użytkownika.
+    </p>
+</div>
+
+<div class="row">
+    <div class="col-md-3 mb-4">
+        <partial name="_ManageNav" />
+    </div>
+
+    <div class="col-md-9">
+        @RenderBody()
+    </div>
+</div>
+
+@section Scripts {
+    @RenderSection("Scripts", required: false)
+}
