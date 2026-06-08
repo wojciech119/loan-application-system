@@ -1,0 +1,43 @@
+﻿@page
+@model ResendEmailConfirmationModel
+
+@{
+    ViewData["Title"] = "Ponowne potwierdzenie e-mail";
+}
+
+<div class="auth-panel">
+    <div class="row justify-content-center">
+        <div class="col-lg-6">
+            <div class="card shadow-sm border-0">
+                <div class="card-body p-4 p-md-5">
+                    <h1 class="mb-2">Ponowne potwierdzenie e-mail</h1>
+
+                    <p class="mb-4">
+                        Podaj adres e-mail, aby ponownie wysłać wiadomość potwierdzającą.
+                    </p>
+
+                    <form method="post">
+                        <div asp-validation-summary="All" class="text-danger mb-3" role="alert"></div>
+
+                        <div class="form-floating mb-3">
+                            <input asp-for="Input.Email"
+                                   class="form-control"
+                                   aria-required="true"
+                                   placeholder="pracownik@bank.pl" />
+                            <label asp-for="Input.Email">Adres e-mail</label>
+                            <span asp-validation-for="Input.Email" class="text-danger"></span>
+                        </div>
+
+                        <button type="submit" class="w-100 btn btn-lg btn-primary">
+                            Wyślij ponownie
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
