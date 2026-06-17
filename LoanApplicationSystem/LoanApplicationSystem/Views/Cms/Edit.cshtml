@@ -1,0 +1,39 @@
+﻿@model LoanApplicationSystem.Models.CmsPage
+
+@{
+    ViewData["Title"] = "Edycja ogłoszenia";
+}
+
+<div class="page-header mb-4">
+    <h1>Edycja ogłoszenia</h1>
+</div>
+
+<div class="card shadow-sm">
+    <div class="card-body p-4">
+        <form asp-action="Edit" method="post">
+            <input type="hidden" asp-for="Id" />
+
+            <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+            <div class="mb-4">
+                <h3>@Model.Title</h3>
+            </div>
+
+            <div class="form-group mb-3">
+                <label for="content" class="form-label">Treść ogłoszenia</label>
+                <textarea id="content"
+                          name="content"
+                          class="form-control"
+                          rows="6">@Model.Content</textarea>
+            </div>
+
+            <button type="submit" class="btn btn-primary">
+                Zapisz zmiany
+            </button>
+
+            <a asp-action="Index" class="btn btn-dark">
+                Anuluj
+            </a>
+        </form>
+    </div>
+</div>

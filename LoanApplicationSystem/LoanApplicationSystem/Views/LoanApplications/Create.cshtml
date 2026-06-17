@@ -1,0 +1,298 @@
+﻿@model LoanApplicationSystem.Models.LoanApplication
+
+@{
+    ViewData["Title"] = "Nowy wniosek klienta";
+}
+
+<h1>Nowy wniosek kredytowy klienta</h1>
+
+<form asp-action="Create" method="post" id="loanApplicationForm">
+    <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+    <div class="card shadow-sm mb-4">
+        <div class="card-header">
+            Dane klienta
+        </div>
+
+        <div class="card-body">
+            <div class="form-group mb-3">
+                <label asp-for="FullName"></label>
+                <input asp-for="FullName" class="form-control" required />
+                <span asp-validation-for="FullName" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mb-3">
+                <label asp-for="Email"></label>
+                <input asp-for="Email"
+                       class="form-control"
+                       placeholder="np. jan.kowalski@example.com"
+                       required />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mb-3">
+                <label asp-for="PhoneNumber"></label>
+
+                <input type="hidden" asp-for="PhoneNumber" id="PhoneNumber" />
+
+                <div class="input-group">
+                    <select id="PhoneCountryPrefix" class="form-select" style="max-width: 220px;">
+                        <option value="+48" selected>Polska (+48)</option>
+                        <option value="+49">Niemcy (+49)</option>
+                        <option value="+44">Wielka Brytania (+44)</option>
+                        <option value="+33">Francja (+33)</option>
+                        <option value="+34">Hiszpania (+34)</option>
+                        <option value="+39">Włochy (+39)</option>
+                        <option value="+420">Czechy (+420)</option>
+                        <option value="+421">Słowacja (+421)</option>
+                        <option value="+380">Ukraina (+380)</option>
+                    </select>
+
+                    <input type="text"
+                           id="PhoneNumberLocal"
+                           class="form-control"
+                           inputmode="numeric"
+                           placeholder="np. 222 000 222"
+                           maxlength="17"
+                           required />
+                </div>
+
+                <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="card shadow-sm mb-4">
+        <div class="card-header">
+            Dane finansowe
+        </div>
+
+        <div class="card-body">
+            <div class="form-group mb-3">
+                <label asp-for="MonthlyIncome"></label>
+                <input asp-for="MonthlyIncome"
+                       class="form-control money-input"
+                       type="text"
+                       inputmode="decimal"
+                       placeholder="np. 12000 albo 12 000"
+                       data-val="false"
+                       required />
+                <span asp-validation-for="MonthlyIncome" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mb-3">
+                <label asp-for="MonthlyExpenses"></label>
+                <input asp-for="MonthlyExpenses"
+                       class="form-control money-input"
+                       type="text"
+                       inputmode="decimal"
+                       placeholder="np. 2000 albo 2 000"
+                       data-val="false"
+                       required />
+                <span asp-validation-for="MonthlyExpenses" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mb-3">
+                <label asp-for="RequestedAmount"></label>
+                <input asp-for="RequestedAmount"
+                       class="form-control money-input"
+                       type="text"
+                       inputmode="decimal"
+                       placeholder="np. 100000 albo 100 000"
+                       data-val="false"
+                       required />
+                <span asp-validation-for="RequestedAmount" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mb-3">
+                <label asp-for="RepaymentMonths"></label>
+                <input asp-for="RepaymentMonths" class="form-control" required />
+                <span asp-validation-for="RepaymentMonths" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mb-3">
+                <label asp-for="Purpose"></label>
+                <textarea asp-for="Purpose"
+                          class="form-control"
+                          rows="3"
+                          required></textarea>
+                <span asp-validation-for="Purpose" class="text-danger"></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="card shadow-sm mb-4">
+        <div class="card-header">
+            Dane scoringowe
+        </div>
+
+        <div class="card-body">
+            <div class="form-group mb-3">
+                <label asp-for="EmploymentType"></label>
+                <select asp-for="EmploymentType"
+                        class="form-select"
+                        asp-items="Html.GetEnumSelectList<EmploymentType>()"
+                        required>
+                    <option value="">-- wybierz --</option>
+                </select>
+                <span asp-validation-for="EmploymentType" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mb-3">
+                <label asp-for="CreditHistory"></label>
+                <select asp-for="CreditHistory"
+                        class="form-select"
+                        asp-items="Html.GetEnumSelectList<CreditHistory>()"
+                        required>
+                    <option value="">-- wybierz --</option>
+                </select>
+                <span asp-validation-for="CreditHistory" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mb-3">
+                <label asp-for="Dependents"></label>
+                <input asp-for="Dependents" class="form-control" />
+                <span asp-validation-for="Dependents" class="text-danger"></span>
+            </div>
+
+            <div class="form-check mb-3">
+                <input asp-for="HasProperty" class="form-check-input" />
+                <label asp-for="HasProperty" class="form-check-label"></label>
+            </div>
+        </div>
+    </div>
+
+    <button type="button"
+            class="btn btn-primary"
+            id="openConfirmModalButton">
+        Złóż wniosek
+    </button>
+
+    <a asp-action="Index" class="btn btn-dark">
+        Anuluj
+    </a>
+</form>
+
+<div class="modal fade"
+     id="confirmSubmitModal"
+     tabindex="-1"
+     aria-labelledby="confirmSubmitModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="confirmSubmitModalLabel">
+                    Potwierdzenie złożenia wniosku
+                </h5>
+
+                <button type="button"
+                        class="btn-close"
+                        data-bs-dismiss="modal"
+                        aria-label="Zamknij">
+                </button>
+            </div>
+
+            <div class="modal-body">
+                Czy na pewno dane klienta zostały wprowadzone poprawnie?
+
+                <br /><br />
+
+                Po zapisaniu wniosku jego dane nie będą mogły zostać samodzielnie zmienione.
+                W przypadku błędu wybierz anulowanie i sprawdź formularz przed wysłaniem.
+            </div>
+
+            <div class="modal-footer">
+                <button type="button"
+                        class="btn btn-dark"
+                        data-bs-dismiss="modal">
+                    Wróć do formularza
+                </button>
+
+                <button type="button"
+                        class="btn btn-primary"
+                        id="confirmSubmitButton">
+                    Zapisz wniosek
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+    <script>
+        function normalizeMoneyInputs() {
+            $(".money-input").each(function () {
+                var value = $(this).val();
+
+                if (value) {
+                    value = value
+                        .replace(/\s/g, "")
+                        .replace(/\u00A0/g, "")
+                        .replace(/\u202F/g, "");
+
+                    $(this).val(value);
+                }
+            });
+        }
+
+        function formatPhoneNumber(value) {
+            var digits = value.replace(/\D/g, "").substring(0, 15);
+            var groups = digits.match(/.{1,3}/g);
+
+            return groups ? groups.join(" ") : "";
+        }
+
+        function updatePhoneNumberHiddenInput() {
+            var prefix = $("#PhoneCountryPrefix").val();
+            var localNumber = $("#PhoneNumberLocal").val();
+
+            if (localNumber) {
+                $("#PhoneNumber").val(prefix + " " + localNumber);
+            } else {
+                $("#PhoneNumber").val("");
+            }
+        }
+
+        $("#PhoneNumberLocal").on("input", function () {
+            var formatted = formatPhoneNumber($(this).val());
+            $(this).val(formatted);
+            updatePhoneNumberHiddenInput();
+        });
+
+        $("#PhoneCountryPrefix").on("change", function () {
+            updatePhoneNumberHiddenInput();
+        });
+
+        $("#openConfirmModalButton").on("click", function () {
+            normalizeMoneyInputs();
+            updatePhoneNumberHiddenInput();
+
+            var formElement = document.getElementById("loanApplicationForm");
+
+            if (!formElement.checkValidity()) {
+                formElement.reportValidity();
+                return;
+            }
+
+            var form = $("#loanApplicationForm");
+
+            if (form.valid && !form.valid()) {
+                return;
+            }
+
+            var modal = new bootstrap.Modal(document.getElementById("confirmSubmitModal"));
+            modal.show();
+        });
+
+        $("#confirmSubmitButton").on("click", function () {
+            normalizeMoneyInputs();
+            updatePhoneNumberHiddenInput();
+
+            $("#loanApplicationForm").submit();
+        });
+    </script>
+}

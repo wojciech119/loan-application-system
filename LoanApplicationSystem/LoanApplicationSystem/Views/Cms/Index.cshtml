@@ -1,0 +1,39 @@
+﻿@model IEnumerable<LoanApplicationSystem.Models.CmsPage>
+
+@{
+    ViewData["Title"] = "Ogłoszenia";
+}
+
+<div class="page-header mb-4">
+    <h1>Ogłoszenia dla pracowników</h1>
+</div>
+
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success">
+        @TempData["SuccessMessage"]
+    </div>
+}
+
+<div class="row g-4">
+    @foreach (var cmsPage in Model)
+    {
+        <div class="col-lg-12">
+            <div class="card shadow-sm h-100">
+                <div class="card-body p-4">
+                    <h3>@cmsPage.Title</h3>
+
+                    <p class="mb-4">
+                        @cmsPage.Content
+                    </p>
+
+                    <a asp-action="Edit"
+                       asp-route-id="@cmsPage.Id"
+                       class="btn btn-outline-primary">
+                        Edytuj
+                    </a>
+                </div>
+            </div>
+        </div>
+    }
+</div>
